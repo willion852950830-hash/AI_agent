@@ -25,13 +25,13 @@
 - ✅ **改进建议**: 提供代码质量改进建议
 
 #### 使用示例:
-```python
+```bash
 # 启动智能体
 python bug_fixer_agent.py
 
-# 示例对话
+# 示例对话 (以下代码故意包含错误用于演示)
 You: 帮我分析这段代码: 
 def add(a, b):
-    if a = 0:
+    if a = 0:  # Bug示例: 这里应该用 == 而不是 =
         return b
     return a + b

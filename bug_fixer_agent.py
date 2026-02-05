@@ -2,7 +2,7 @@ import asyncio
 import sys
 import ast
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from copilot import CopilotClient
 from copilot.tools import define_tool
 from copilot.generated.session_events import SessionEventType
@@ -80,7 +80,7 @@ def detect_common_bugs(code: str) -> List[Dict[str, str]]:
     return issues
 
 
-def analyze_code_structure(code: str) -> Dict[str, any]:
+def analyze_code_structure(code: str) -> Dict[str, Any]:
     """分析代码结构 / Analyze code structure"""
     try:
         tree = ast.parse(code)
@@ -95,7 +95,7 @@ def analyze_code_structure(code: str) -> Dict[str, any]:
             "函数列表 / Function List": functions[:5],  # 只显示前5个
             "类列表 / Class List": classes[:5]
         }
-    except:
+    except Exception:
         return {"error": "无法解析代码结构"}
 
 
