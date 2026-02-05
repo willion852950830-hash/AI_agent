@@ -70,21 +70,29 @@ class TestGenerator:
         
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
-                # 只测试顶层函数
-                if not any(isinstance(p, (ast.ClassDef, ast.FunctionDef)) 
-                          for p in ast.walk(tree) 
-                          if hasattr(p, 'body') and node in getattr(p, 'body', [])):
-                    functions.append(node)
+                # Collect all functions, we'll filter later
+                functions.append(node)
             elif isinstance(node, ast.ClassDef):
                 classes.append(node)
         
+        # Filter to only top-level functions (not inside classes)
+        top_level_functions = []
+        for func in functions:
+            is_top_level = True
+            for cls in classes:
+                if func in cls.body:
+                    is_top_level = False
+                    break
+            if is_top_level:
+                top_level_functions.append(func)
+        
         if self.test_framework == 'pytest':
             return self._generate_pytest_tests(
-                module_name, functions, classes
+                module_name, top_level_functions, classes
             )
         else:
             return self._generate_unittest_tests(
-                module_name, functions, classes
+                module_name, top_level_functions, classes
             )
     
     def _generate_pytest_tests(
@@ -188,7 +196,10 @@ class TestGenerator:
         # 为类方法生成测试
         for node in cls.body:
             if isinstance(node, ast.FunctionDef):
-                if not node.name.startswith('_') or node.name == '__init__':
+                # 跳过私有方法（除了__init__），但包括公共方法
+                if node.name.startswith('_') and node.name != '__init__':
+                    continue
+                if node.name == '__init__':
                     continue
                 lines.append('')
                 lines.append(f'    def test_{node.name}(self):')
@@ -310,7 +321,10 @@ class TestGenerator:
         # 为类方法生成测试
         for node in cls.body:
             if isinstance(node, ast.FunctionDef):
-                if not node.name.startswith('_') or node.name == '__init__':
+                # 跳过私有方法（除了__init__），但包括公共方法
+                if node.name.startswith('_') and node.name != '__init__':
+                    continue
+                if node.name == '__init__':
                     continue
                 lines.append('')
                 lines.append(f'    def test_{node.name}(self):')
