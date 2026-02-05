@@ -7,10 +7,10 @@ import sys
 from pathlib import Path
 
 # 添加 src 目录到路径
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from fixer import BugFixer
-from analyzer import CodeIssue
+from src.fixer import BugFixer
+from src.analyzer import CodeIssue
 
 
 class TestBugFixer:
