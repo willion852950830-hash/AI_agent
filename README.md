@@ -1,37 +1,62 @@
 # AI_agent
 创建各种主流的ai_agent智能体
 
-## 智能体列表 / Agent List
+## 已实现的智能体
 
-### 1. Weather Assistant (天气助手)
-- 文件: `weather_assistant.py`
-- 功能: 查询城市天气信息
-- 使用: `python weather_assistant.py`
+### 1. Python Helper Agent
 
-### 2. Bug Fixer Agent (Bug修复智能体)
-- 文件: `bug_fixer_agent.py`
-- 功能: 自动检测和修复Python代码中的bug
-- 使用: `python bug_fixer_agent.py`
+Python Bug修复专家，专注于修复各种代码错误。
 
-#### Bug修复智能体功能:
-- ✅ **语法错误检测**: 自动识别Python语法错误
-- ✅ **常见bug检测**: 
-  - 条件语句中的赋值错误 (= vs ==)
-  - 除零错误
-  - 文件资源泄漏
-  - 可变默认参数
-- ✅ **代码结构分析**: 分析函数、类、导入等
-- ✅ **自动修复**: 尝试自动修复常见错误
-- ✅ **改进建议**: 提供代码质量改进建议
+**主要功能：**
+- 遵循 PEP 8 编码规范
+- 修复程序及代码错误，并直接修改源代码使其正确
+- 处理程序运行中所报的错误，并修改源代码
+- 编写清晰的文档字符串
+- 创建全面的单元测试
+- 优化代码性能和可读性
+- 使用类型提示增强代码质量
 
-#### 使用示例:
+**文档：** 详见 [python-helper/README.md](python-helper/README.md)
+
+## 项目结构
+
+```
+AI_agent/
+├── README.md
+└── python-helper/          # Python 代码修复智能体
+    ├── agent.yaml         # 智能体配置
+    ├── README.md         # 详细文档
+    ├── requirements.txt  # 依赖包
+    ├── src/             # 源代码
+    │   ├── analyzer.py
+    │   ├── fixer.py
+    │   ├── formatter.py
+    │   ├── docstring_generator.py
+    │   └── test_generator.py
+    ├── tests/           # 单元测试
+    └── examples/        # 使用示例
+```
+
+## 快速开始
+
+### Python Helper Agent
+
 ```bash
-# 启动智能体
-python bug_fixer_agent.py
+# 安装依赖
+cd python-helper
+pip install -r requirements.txt
 
-# 示例对话 (以下代码故意包含错误用于演示)
-You: 帮我分析这段代码: 
-def add(a, b):
-    if a = 0:  # Bug示例: 这里应该用 == 而不是 =
-        return b
-    return a + b
+# 运行示例
+python examples/usage_example.py
+
+# 运行测试
+pytest tests/
+```
+
+## 贡献
+
+欢迎贡献新的智能体实现！
+
+## 许可证
+
+MIT License
